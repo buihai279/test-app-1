@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('foo', function () {
-    return 'Hello World';
-});
+Route::get('/product','ProductController@index')->name('product.index');
+Route::get('/detail/{id}','HomeController@show')->name('detail');
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
