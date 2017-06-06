@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
                 [
                     'avatar' => 'photo.jpg',
                     'name' => str_random(10),
-                    'email' => str_random(10).'@gmail.com',
+                    'email' => 'member@gmail.com',
                     'level' => 0,                    
                     'password' => bcrypt('123456'),
                 ],
