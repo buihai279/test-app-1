@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+
+
+use App\Http\Requests\RegisterRequest;
+
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,9 +54,17 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'avatar' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
+    }
+
+
+    public function register(RegisterRequest $request) {
+
+        $this->create($request->all());
+        return redirect('/login')->with('status-success', 'Register successfully. Ready for login');
     }
 
     /**
@@ -62,10 +75,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        if (count(User::get())<1)
+            $lv=1;
+        else $lv=0;
+        $file = $data['avatar'];
+        $fileName=date("Y-m-d",time()).'-'.$file->getClientOriginalName();
+        $path = 'uploads';
+        $file->move($path, $fileName);
+        $user=new User();
+        $user->name=$data['name'];
+        $user->email= $data['email'];
+        $user->avatar=$fileName;
+        $user->level=0;
+        $user->password=bcrypt($data['password']);
+        $user->save();
+        
     }
 }

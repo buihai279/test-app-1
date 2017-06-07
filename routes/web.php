@@ -15,6 +15,9 @@ Route::get('/admin/product','ProductController@index')->name('product.index');
 Route::post('/admin/product','ProductController@store')->name('product.store');
 Route::get('/admin/product/edit/{id}','ProductController@edit')->name('product.edit');
 Route::post('admin/product/{id}', 'ProductController@update')->name('product.update');
+Route::get('admin/manager-user/', 'UserController@index')->name('user.index');
+Route::get('admin/user/modify', 'UserController@modify')->name('user.modify');
+Route::post('admin/user/update', 'UserController@update')->name('user.update');
 
 Route::post('admin/product/destroy/{id}', 'ProductController@destroy')->name('product.destroy');
 

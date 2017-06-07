@@ -1,30 +1,35 @@
 @extends('layouts.app')
 @section('content')
-	<div class="col-sm-12 col-md-6 col-lg-6" style="border: 1px solid #f1f1f1">
-		@php
-		@endphp
+<div class="row">
+	<div class="col-sm-12 col-md-6 col-lg-6">
 		<table class="table table-striped">
 		 	<tr>
 		 		<th>id</th>
 		 		<th>name</th>
-		 		{{-- <th>description</th> --}}
 		 		<th>Photo</th>
 		 		<th>Price</th>
 		 		<th>option</th>
 		 	</tr>
+		 	@if (count($products)<1)
+		 	<tr>
+			 	<td colspan="5">
+		 			No result
+			 	</td>
+		 	</tr>
+		 	@endif
 			@foreach ($products as $product)
 				<tr>
 				  	<td>{{$product->id}}</td>
 				  	<td>{{$product->name}}</td>
 				  	<td><img src="{{ asset('uploads/'.$product->photo) }}"	height="40px"></td>
 				  	<td>{{$product->price}}</td>
-				  	<td><a href="{{ route('product.edit',$product->id) }}">edit</a> | <a href="#">vỉew</a></td>
+				  	<td><a href="{{ route('product.edit',$product->id) }}">edit</a> | <a href="{{ route('detail',$product->id) }}">view</a></td>
 				  </tr>
 			@endforeach
 		</table>
 		{{$products->links()}}
 	</div>
-	<div class="col-sm-12 col-md-6 col-lg-6" style="border: 1px solid #f1f1f1">
+	<div class="col-sm-12 col-md-6 col-lg-6">
 		<h4>Create new product</h4>
 		<form method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
 		    {{ csrf_field() }}
@@ -48,4 +53,5 @@
 		  <button type="submit" class="btn btn-default">Add product</button>
 		</form>
 	</div>
+</div>
 @endsection

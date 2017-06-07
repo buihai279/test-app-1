@@ -40,15 +40,22 @@ class LoginController extends Controller
     }
     public function login(Request $req)
     {
-        $email=$req->email;
-    	$password=$req->password;
-        if (Auth::attempt(['email'=>$email,'password'=>$password])){
-        	$user = Auth::user();
-
+        $remember=($req->remember)?true:false;
+        $login=array('email'=>$req->email,'password'=>$req->password);
+        if ($req->remember==true)
+           $result=Auth::attempt($login,true);
+        else
+           $result=Auth::attempt($login,false);
+        if ($result){
+            $user = Auth::user();
             if($user->level==1)
-                return redirect()->route('product.index');
+                return redirect()->route('product.index')->with('status-success','Login successfully!');
             else
-                return redirect()->route('home');
+                return redirect()->route('home')->with('status-success','Login successfully!');
         }
+        else{
+            return redirect()->back()->with('status-error','User or password unvailable');
+        }
+        
     }
 }

@@ -15,9 +15,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct() {
+        // $this->middleware('auth');
     }
 
     /**
@@ -27,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products=DB::table('products')->paginate(9);;
-        return view('home',['products'=>$products]);
+        $products=DB::table('products')->paginate(9);
+        return view('home', ['products'=>$products]);
     }
     /**
      * Show the application dashboard.
@@ -38,6 +37,6 @@ class HomeController extends Controller
     public function show($id)
     {
         $product=Product::find($id);
-        return view('detail',['product'=>$product]);
+        return view('detail', ['product'=>$product]);
     }
 }

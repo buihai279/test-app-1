@@ -18,10 +18,13 @@
 		    <input type="text" name="txtPrice" value="{{$product->price}}" class="form-control" id="inputPrice" placeholder="Price">
 		  </div>
 		  <div class="form-group">
-		  	<img src="{{asset('uploads/'.$product->photo) }}" class="img-responsive">
-		    <label for="inputFile">Image Product</label>
+		    <label for="inputFile">Old Image Product</label>
+		  	<img src="{{asset('uploads/'.$product->photo) }}" width="300" class="img-responsive">
+		  </div>
+		  <div class="form-group">
+		    <label for="inputFile">New Image Product</label>
 		    <input type="file" name="filePhoto"  id="inputFile">
-		    <p class="help-block">Upload Image Product.</p>
+		    <p class="help-block">You can change image Product.</p>
 		  </div>
 		  <button type="submit" class="btn btn-default">Update product</button>
 		  <button type="submit" class="btn btn-danger" onclick="event.preventDefault();

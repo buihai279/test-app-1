@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Product;
 use App\Http\Requests\StoreProduct;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
@@ -26,9 +28,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-//         $products=DB::;
     	$products= DB::table('products')->paginate(5);
-//         dd($products);
         return view('product.index',['products'=>$products]);
     }
 
@@ -76,9 +76,6 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        // return $id;
-        // die();
-        // return $product=Product::find($id);
     }
 
     /**
@@ -100,17 +97,22 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProduct $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         if (isset($id)) {
 
             $product=Product::find($id);
-            $file = $request->file('filePhoto');
-            $fileName=date("Y-m-d",time()).'-'.$file->getClientOriginalName();
-            $path = 'uploads';
-            $file->move($path, $fileName);
 
-            $product->photo = $fileName;
+
+            $file = $request->file('filePhoto');
+            if ($file!=null) {
+                $fileName=date("Y-m-d",time()).'-'.$file->getClientOriginalName();
+                $path = 'uploads';
+                $file->move($path, $fileName);   
+
+                $product->photo=$fileName;
+            }
+
             $product->name=$request->txtNameProduct;
             $product->description=$request->txtDescription;
             $product->price=$request->txtPrice;
