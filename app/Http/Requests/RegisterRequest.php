@@ -25,10 +25,24 @@ class RegisterRequest extends FormRequest
     {  
         return [
                 'name'=> 'required|min:2|max:100',
-                'avatar'=> 'required',
+                'avatar' => 'required|image | max:10240',
                 'email' => 'required|email',
+                'email' => 'unique:users,email',
                 'password' => 'required|min:6|confirmed',
                 'password_confirmation' => 'required',
             ];
     }
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'txtNameProduct' => '<b>Name product</b> is required',
+            // 'body.required'  => 'A message is required',
+        ];
+    }
 }
+?>

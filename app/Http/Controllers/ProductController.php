@@ -8,6 +8,7 @@ use App\Product;
 use App\Http\Requests\StoreProduct;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\DB;
+use App\Http\Middleware\CheckRole;
 
 
 class ProductController extends Controller
@@ -19,7 +20,7 @@ class ProductController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(CheckRole::class);
     }
     /**
      * Display a listing of the resource.
@@ -30,16 +31,6 @@ class ProductController extends Controller
     {
     	$products= DB::table('products')->paginate(5);
         return view('product.index',['products'=>$products]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -69,16 +60,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -103,7 +84,6 @@ class ProductController extends Controller
 
             $product=Product::find($id);
 
-
             $file = $request->file('filePhoto');
             if ($file!=null) {
                 $fileName=date("Y-m-d",time()).'-'.$file->getClientOriginalName();
@@ -120,7 +100,7 @@ class ProductController extends Controller
             $product->save();
             $request->session()->flash('status-success', 'Product was update successful!');
         }
-        return redirect()->back();
+        return redirect()->route('product.index')->with('status-error', 'Error!!!');
     }
 
     /**
@@ -132,6 +112,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         DB::table('products')->where('id', '=', $id)->delete();
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('status-success', 'Product was delete successful!');
     }
 }

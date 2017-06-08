@@ -26,8 +26,20 @@ class UpdateProductRequest extends FormRequest
         return [
                 'txtNameProduct'=> 'required|min:2|max:100',
                 'txtDescription'=> 'required|min:2|max:300',
-                'txtPrice'=> 'required|min:0|max:10000000|numeric',
-                // 'filePhoto' => 'required',
+                'txtPrice'=> 'required|numeric|digits_between:1,10',
+                'filePhoto' => 'image | max:10240',
             ];
+    }
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'txtNameProduct.required' => "<b class='text-success'>Name product</b> is required",
+            // 'body.required'  => 'A message is required',
+        ];
     }
 }

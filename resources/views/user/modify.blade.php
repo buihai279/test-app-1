@@ -35,14 +35,13 @@
 	                            <label for="avatar" class="col-md-4 control-label">New Avatar</label>
 
 	                            <div class="col-md-6">
-
-	                                <input type="file" name="avatar">
-
+	                                <input type="file" accept="image/*" name="avatar">
 	                                @if ($errors->has('avatar'))
 	                                    <span class="help-block">
 	                                        <strong>{{ $errors->first('avatar') }}</strong>
 	                                    </span>
 	                                @endif
+	                                <small><i>You can change new avatar</i></small>
 	                            </div>
 	                        </div>
 
@@ -57,7 +56,7 @@
 
 	                        <div class="form-group">
 	                            <div class="col-md-6 col-md-offset-4">
-	                                <button type="submit" name="change-info" value="submit" class="btn btn-primary">
+	                                <button type="submit" name="change-info" value="submit" class="btn btn-success">
 	                                    Update profile
 	                                </button>
 	                            </div>
@@ -118,7 +117,7 @@
 
 	                        <div class="form-group">
 	                            <div class="col-md-6 col-md-offset-4">
-	                                <button type="submit" name="change-pass" value="submit" class="btn btn-primary">
+	                                <button type="submit" name="change-pass" value="submit" class="btn btn-success">
 	                                    Update password
 	                                </button>
 	                            </div>

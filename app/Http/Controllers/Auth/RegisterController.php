@@ -77,7 +77,8 @@ class RegisterController extends Controller
     {
         if (count(User::get())<1)
             $lv=1;
-        else $lv=0;
+        else 
+            $lv=0;
         $file = $data['avatar'];
         $fileName=date("Y-m-d",time()).'-'.$file->getClientOriginalName();
         $path = 'uploads';

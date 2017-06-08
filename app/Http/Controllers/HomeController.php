@@ -37,6 +37,8 @@ class HomeController extends Controller
     public function show($id)
     {
         $product=Product::find($id);
+        if( $product==null) 
+            return redirect('/')->with('status-error','Product not found');
         return view('detail', ['product'=>$product]);
     }
 }

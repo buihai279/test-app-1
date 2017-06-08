@@ -4,8 +4,8 @@
 	<div class="col-sm-12 col-md-6 col-lg-6">
 		<table class="table table-striped">
 		 	<tr>
-		 		<th>id</th>
-		 		<th>name</th>
+		 		<th>Id</th>
+		 		<th>Name</th>
 		 		<th>Photo</th>
 		 		<th>Price</th>
 		 		<th>option</th>
@@ -23,7 +23,10 @@
 				  	<td>{{$product->name}}</td>
 				  	<td><img src="{{ asset('uploads/'.$product->photo) }}"	height="40px"></td>
 				  	<td>{{$product->price}}</td>
-				  	<td><a href="{{ route('product.edit',$product->id) }}">edit</a> | <a href="{{ route('detail',$product->id) }}">view</a></td>
+				  	<td>
+				  		<a href="{{ route('product.edit',$product->id) }}">edit</a> | 
+				  		<a href="{{ route('detail',$product->id) }}" target="_bank">view</a>
+				  	</td>
 				  </tr>
 			@endforeach
 		</table>
@@ -35,11 +38,11 @@
 		    {{ csrf_field() }}
 		  <div class="form-group">
 		    <label for="inputNameProduct">Name product</label>
-		    <input type="text" value="{{ old('txtNameProduct') }}" name="txtNameProduct" class="form-control" id="inputNameProduct" autocomplete="off" placeholder="Name product">
+		    <input type="text" autofocus value="{{ old('txtNameProduct') }}" name="txtNameProduct" class="form-control" id="inputNameProduct" autocomplete="off" placeholder="Name product">
 		  </div>
 		  <div class="form-group">
 		    <label for="inputDes">Decription</label>
-		    <textarea name="txtDescription" id="inputTxtdescription" class="form-control" rows="3" required="required">{{ old('txtDescription') }}</textarea>
+		    <textarea name="txtDescription" id="inputTxtdescription" class="form-control" rows="3">{{ old('txtDescription') }}</textarea>
 		  </div>
 		  <div class="form-group">
 		    <label for="inputPrice">Price</label>
@@ -47,10 +50,10 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="inputFile">Image Product</label>
-		    <input type="file" name="filePhoto"  id="inputFile">
-		    <p class="help-block">Upload Image Product.</p>
+		    <input type="file" accept="image/*" name="filePhoto"  id="inputFile">
+            <small><i>Upload Image Product.</i></small>
 		  </div>
-		  <button type="submit" class="btn btn-default">Add product</button>
+		  <button type="submit" class="btn btn-primary">Add product</button>
 		</form>
 	</div>
 </div>

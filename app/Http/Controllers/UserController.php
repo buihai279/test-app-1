@@ -12,12 +12,24 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        if (Auth::guest()||Auth::user()->level!=1) {
+            return redirect()->route('home')->with('status-error','You can not access');
+        }
         $users= DB::table('users')->paginate(5);
         return view('user.index',['users'=>$users]);
     }
@@ -33,38 +45,6 @@ class UserController extends Controller
         return view('user.modify',['user'=>$user]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -100,8 +80,7 @@ class UserController extends Controller
                 $user->name=$request->name;
             }
             $user->save();
-
-            return redirect()->back();
+            return redirect()->back()->with('status-success','User profile updated');
         }
 
 
@@ -129,14 +108,4 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
