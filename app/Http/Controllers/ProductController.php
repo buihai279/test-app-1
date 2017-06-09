@@ -98,7 +98,7 @@ class ProductController extends Controller
             $product->price=$request->txtPrice;
 
             $product->save();
-            $request->session()->flash('status-success', 'Product was update successful!');
+            return redirect()->route('product.index')->with('status-success', 'Product was update successful!');
         }
         return redirect()->route('product.index')->with('status-error', 'Error!!!');
     }

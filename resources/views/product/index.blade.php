@@ -5,10 +5,10 @@
 		<table class="table table-striped">
 		 	<tr>
 		 		<th>Id</th>
-		 		<th>Name</th>
+		 		<th width="40%">Name</th>
 		 		<th>Photo</th>
 		 		<th>Price</th>
-		 		<th>option</th>
+		 		<th>Option</th>
 		 	</tr>
 		 	@if (count($products)<1)
 		 	<tr>
@@ -22,10 +22,14 @@
 				  	<td>{{$product->id}}</td>
 				  	<td>{{$product->name}}</td>
 				  	<td><img src="{{ asset('uploads/'.$product->photo) }}"	height="40px"></td>
-				  	<td>{{$product->price}}</td>
+				  	<td>{{$product->price}} $</td>
 				  	<td>
-				  		<a href="{{ route('product.edit',$product->id) }}">edit</a> | 
-				  		<a href="{{ route('detail',$product->id) }}" target="_bank">view</a>
+				  		<a href="{{ route('product.edit',$product->id) }}">
+				  			<i class="glyphicon glyphicon-pencil"></i>
+			  			</a> 
+				  		<a href="{{ route('detail',$product->id) }}" target="_bank">
+				  			<i class="glyphicon glyphicon-eye-open"></i>
+			  			</a>
 				  	</td>
 				  </tr>
 			@endforeach
@@ -53,7 +57,7 @@
 		    <input type="file" accept="image/*" name="filePhoto"  id="inputFile">
             <small><i>Upload Image Product.</i></small>
 		  </div>
-		  <button type="submit" class="btn btn-primary">Add product</button>
+		  <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add product</button>
 		</form>
 	</div>
 </div>
