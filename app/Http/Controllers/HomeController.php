@@ -16,7 +16,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show all product on Homepage.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,12 +28,13 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show one product.
      *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
+        // get product by id
         $product = Product::find($id);
         if ($product == null) {
             return redirect('/')->with('status-error', 'Product not found');

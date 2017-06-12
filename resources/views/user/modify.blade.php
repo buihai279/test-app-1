@@ -30,9 +30,7 @@ Edit user: {{ $user->name }}
 	                            <label for="avatar" class="col-md-4 control-label">Old Avatar</label>
 
 	                            <div class="col-md-6">
-
-	                        			<img style="max-width: 300px" src="{{ asset('uploads/'.$user->avatar) }}">
-	                                
+	                        			<img  class="img-responsive" style="max-height: 200px; margin: 0 auto;max-width: 300px" src="{{ asset('uploads/'.$user->avatar) }}">
 	                            </div>
 	                        </div>
 

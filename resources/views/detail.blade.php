@@ -4,10 +4,10 @@ Product: {{$product->name}}
 @extends('layouts.app')
 @section('content')
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-lg-3">
+        <div class="col-xs-12 col-md-3 col-lg-3">
             @include('layouts.left-content')
         </div>
-        <div class="col-xs-12 col-sm-12 col-lg-9">
+        <div class="col-xs-12 col-md-9 col-lg-9">
 
             <div class="col-md-6">
                 <img src="{{asset('uploads/'. $product->photo) }}" class="img-responsive">
@@ -28,8 +28,9 @@ Product: {{$product->name}}
                 <p>
                     <h6>Description: </h6> 
                     @php
-                        echo $product->description;
+                    // echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8');
                     @endphp
+                        {{$product->description}}
                 </p>
             </div>
         </div>

@@ -24,22 +24,25 @@
     <script src="{{ asset('js/bootstrap.min.js') }}" ></script>
     
     <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
-    <script>tinymce.init({ selector:'textarea' });</script>
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+
+      $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 </head>
 <body>
-    <div id="app">
         @include('layouts.menu')
-        <div class="container">
+        <div class="container" style="min-height: 600px">
             @include('layouts.notify')
             @yield('content')
         </div>
-    </div>
-
+        <footer style="height: 50px;background:#f2f3f4;line-height: 50px;border-radius: 5px;padding-left: 10px" >
+            {{ config('app.name', 'Laravel') }} - Bùi Văn Hải
+        </footer>
 </body>
 </html>

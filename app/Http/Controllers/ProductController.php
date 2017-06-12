@@ -15,11 +15,12 @@ class ProductController extends Controller
      */
     public function __construct()
     {
+        // check level of user
         $this->middleware(CheckRole::class);
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing and form create product of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,7 +32,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new product created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -39,11 +40,13 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
+        //upload photo
         $file = $request->file('filePhoto');
         $fileName = date('Y-m-d', time()).'-n'.rand(0, 100).'-'.$file->getClientOriginalName();
         $path = 'uploads';
         $file->move($path, $fileName);
         
+        // create new product
         $newProduct = new Product();
         $newProduct->name = $request->txtNameProduct;
         $newProduct->description = $request->txtDescription;
@@ -51,6 +54,7 @@ class ProductController extends Controller
         $newProduct->price = $request->txtPrice;
         $newProduct->photo = $fileName;
 
+        // get notify
         $request->session()->flash('status-success', 'Product was insert successful!');
         $newProduct->save();
         $id=$newProduct->id;
@@ -68,6 +72,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        // get product by id
         $product = Product::find($id);
 
         return view('product.edit', ['product' => $product]);
@@ -84,10 +89,12 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, $id)
     {
         if (isset($id)) {
+            // get product by id
             $product = Product::find($id);
 
             $file = $request->file('filePhoto');
             if ($file != null) {
+                // upload phôt
                 $fileName = date('Y-m-d', time()).'-'.rand(0, 100).'-'.$file->getClientOriginalName();
                 $path = 'uploads';
                 $file->move($path, $fileName);
@@ -116,6 +123,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        // delete photo and product
         $photo = Product::find($id)->photo;
         unlink('uploads/'.$photo);
         DB::table('products')->where('id', '=', $id)->delete();

@@ -2,7 +2,7 @@
   <div class="panel-heading">User profile</div>
   <div class="panel-body">
     @if (!Auth::guest())
-    	<img src="{{asset('uploads/'.Auth::user()->avatar) }}" class="img-responsive">
+    	<img src="{{asset('uploads/'.Auth::user()->avatar) }}" class="img-responsive" style="max-height: 200px; margin: 0 auto">
     	<h4>
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         <b class="text-success">{{Auth::user()->name}}</b>

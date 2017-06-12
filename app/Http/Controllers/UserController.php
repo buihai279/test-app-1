@@ -73,7 +73,7 @@ class UserController extends Controller
                 $fileName = date('Y-m-d', time()).'-'.$file->getClientOriginalName();
                 $path = 'uploads';
                 $file->move($path, $fileName);
-
+                unlink('uploads/'.$user->avatar);
                 $user->avatar = $fileName;
             }
             if ($user->name != $request->name) {

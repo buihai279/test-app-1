@@ -32,10 +32,10 @@ Manager product
 				  	<td><img src="{{ asset('uploads/'.$product->photo) }}"	height="40px"></td>
 				  	<td>{{number_format($product->price)}} $</td>
 				  	<td>
-				  		<a href="{{ route('product.edit',$product->id) }}">
+				  		<a href="{{ route('product.edit',$product->id) }}"  data-toggle="tooltip" title="Edit: {{$product->name}}">
 				  			<i class="glyphicon glyphicon-pencil"></i>
 			  			</a> 
-				  		<a href="{{ route('detail',$product->id) }}" target="_bank">
+				  		<a href="{{ route('detail',$product->id) }}" target="_bank"  data-toggle="tooltip" title="Open new tab: {{$product->name}}">
 				  			<i class="glyphicon glyphicon-eye-open"></i>
 			  			</a>
 				  	</td>
