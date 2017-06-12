@@ -6,8 +6,6 @@ class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -17,16 +15,16 @@ class UsersTableSeeder extends Seeder
                     'avatar' => 'photo.jpg',
                     'name' => str_random(10),
                     'email' => 'member@gmail.com',
-                    'level' => 0,                    
+                    'level' => 0,
                     'password' => bcrypt('123456'),
                 ],
                 [
                     'avatar' => 'photo.jpg',
                     'name' => str_random(10),
                     'email' => 'admin@gmail.com',
-                    'level' => 1,                    
+                    'level' => 1,
                     'password' => bcrypt('123456'),
-                ]
+                ],
             ]);
     }
 }

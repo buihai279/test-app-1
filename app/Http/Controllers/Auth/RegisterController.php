@@ -3,11 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-
-
 use App\Http\Requests\RegisterRequest;
-
-
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -36,8 +32,6 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -47,49 +41,45 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'avatar' => 'required',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
     }
 
-
-    public function register(RegisterRequest $request) {
-
+    public function register(RegisterRequest $request)
+    {
         $this->create($request->all());
+
         return redirect('/login')->with('status-success', 'Register successfully. Ready for login');
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return User
      */
     protected function create(array $data)
     {
-        if (count(User::get())<1)
-            $lv=1;
-        else 
-            $lv=0;
+        if (count(User::get()) < 1) {
+            $lv = 1;
+        } else {
+            $lv = 0;
+        }
         $file = $data['avatar'];
-        $fileName=date("Y-m-d",time()).'-'.$file->getClientOriginalName();
+        $fileName = date('Y-m-d', time()).'-'.$file->getClientOriginalName();
         $path = 'uploads';
         $file->move($path, $fileName);
-        $user=new User();
-        $user->name=$data['name'];
-        $user->email= $data['email'];
-        $user->avatar=$fileName;
-        $user->level=0;
-        $user->password=bcrypt($data['password']);
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->avatar = $fileName;
+        $user->level = $lv;
+        $user->password = bcrypt($data['password']);
         $user->save();
-        
     }
 }

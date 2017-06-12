@@ -13,13 +13,12 @@ class UserController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,11 +26,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::guest()||Auth::user()->level!=1) {
-            return redirect()->route('home')->with('status-error','You can not access');
+        if (Auth::guest() || Auth::user()->level != 1) {
+            return redirect()->route('home')->with('status-error', 'You can not access');
         }
-        $users= DB::table('users')->paginate(5);
-        return view('user.index',['users'=>$users]);
+        $users = DB::table('users')->paginate(5);
+
+        return view('user.index', ['users' => $users]);
     }
 
     /**
@@ -41,27 +41,27 @@ class UserController extends Controller
      */
     public function modify()
     {
-        $user=User::find(Auth::id());
-        return view('user.modify',['user'=>$user]);
-    }
+        $user = User::find(Auth::id());
 
+        return view('user.modify', ['user' => $user]);
+    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
+        $user = User::find(Auth::id());
 
-        $user=User::find(Auth::id());
-
-        if ($request['change-info']=='submit') {
-
+        if ($request['change-info'] == 'submit') {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|max:100|min:3',
+                'name' => 'required|max:100',
+                'avatar' => 'image | max:10240',
             ]);
             if ($validator->fails()) {
                 return back()
@@ -69,24 +69,22 @@ class UserController extends Controller
                         ->withInput();
             }
             $file = $request->file('avatar');
-            if ($file!=null) {
-                $fileName=date("Y-m-d",time()).'-'.$file->getClientOriginalName();
+            if ($file != null) {
+                $fileName = date('Y-m-d', time()).'-'.$file->getClientOriginalName();
                 $path = 'uploads';
-                $file->move($path, $fileName);   
+                $file->move($path, $fileName);
 
-                $user->avatar=$fileName;
+                $user->avatar = $fileName;
             }
-            if ($user->name!=$request->name) {
-                $user->name=$request->name;
+            if ($user->name != $request->name) {
+                $user->name = $request->name;
             }
             $user->save();
-            return redirect()->back()->with('status-success','User profile updated');
+
+            return redirect()->back()->with('status-success', 'User profile updated');
         }
 
-
-
-        if ($request['change-pass']=='submit') {
-
+        if ($request['change-pass'] == 'submit') {
             $validator = Validator::make($request->all(), [
                 'password' => 'required|max:100|min:3',
                 'newpassword' => 'required|max:100|min:6|confirmed',
@@ -98,14 +96,13 @@ class UserController extends Controller
                         ->withInput();
             }
             if (Hash::check($request->password, Auth::user()->password)) {
-                $user->password=bcrypt($request->newpassword);
+                $user->password = bcrypt($request->newpassword);
                 $user->save();
-                return redirect()->back()->with('status-success','Password changed');
-            }else
-                return redirect()->back()->with('status-error','Password not valiable');
 
-
+                return redirect()->back()->with('status-success', 'Password changed');
+            } else {
+                return redirect()->back()->with('status-error', 'Password not valiable');
+            }
         }
     }
-
 }

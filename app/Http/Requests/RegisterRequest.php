@@ -22,9 +22,9 @@ class RegisterRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {  
+    {
         return [
-                'name'=> 'required|min:2|max:100',
+                'name' => 'required|max:100',
                 'avatar' => 'required|image | max:10240',
                 'email' => 'required|email',
                 'email' => 'unique:users,email',
@@ -32,6 +32,7 @@ class RegisterRequest extends FormRequest
                 'password_confirmation' => 'required',
             ];
     }
+
     /**
      * Get the error messages for the defined validation rules.
      *
@@ -40,9 +41,21 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'txtNameProduct' => '<b>Name product</b> is required',
-            // 'body.required'  => 'A message is required',
+            'name.required' => "The <b class='text-success'>Name </b> is required",
+            'name.max' => "The <b class='text-success'>Name </b> max 100 alphabetic characters",
+
+            'avatar.required' => "The <b class='text-success'>Avatar</b> is required.",
+            'avatar.image' => "The <b class='text-success'>Avatar</b> is must be an image.",
+            'avatar.max' => "The <b class='text-success'>Avatar</b> may not be greater than 10240 kilobytes(10MB).",
+
+            'email.required' => "The <b class='text-success'>Email</b> is required.",
+            'email.unique' => "The <b class='text-success'>Email</b> exits.",
+        
+            'password.required' => "The <b class='text-success'>Password</b> is required.",
+            'password.min' => "The <b class='text-success'>Password</b> min 6 characters.",
+            'password_confirmation.required' => "The <b class='text-success'>Password confirm</b> is required.",
+            'password.confirmed' => "The <b class='text-success'>Password confirm</b> not match.",
+
         ];
     }
 }
-?>

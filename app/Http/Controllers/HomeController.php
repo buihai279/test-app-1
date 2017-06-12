@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
-
 use App\Product;
 
 class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         // $this->middleware('auth');
     }
 
@@ -26,9 +22,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products=DB::table('products')->paginate(9);
-        return view('home', ['products'=>$products]);
+        $products = DB::table('products')->paginate(6);
+
+        return view('home', ['products' => $products]);
     }
+
     /**
      * Show the application dashboard.
      *
@@ -36,9 +34,11 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        $product=Product::find($id);
-        if( $product==null) 
-            return redirect('/')->with('status-error','Product not found');
-        return view('detail', ['product'=>$product]);
+        $product = Product::find($id);
+        if ($product == null) {
+            return redirect('/')->with('status-error', 'Product not found');
+        }
+
+        return view('detail', ['product' => $product]);
     }
 }

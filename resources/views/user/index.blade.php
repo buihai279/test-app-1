@@ -1,16 +1,19 @@
+@section('title')
+List user
+@endsection
 @extends('layouts.app')
 @section('content')
-	<div class="col-sm-12 col-md-6 col-lg-6" style="border: 1px solid #f1f1f1">
+<div class="row">
+	<div class="col-sm-12 col-md-6 col-lg-6">
 		@php
 		@endphp
 		<table class="table table-striped">
 		 	<tr>
-		 		<th>id</th>
-		 		<th>name</th>
-		 		{{-- <th>description</th> --}}
-		 		<th>Photo</th>
-		 		<th>Price</th>
-		 		<th>option</th>
+		 		<th>Id</th>
+		 		<th>Name</th>
+		 		<th>Email</th>
+		 		<th>Avatar</th>
+		 		<th>Level</th>
 		 	</tr>
 			@foreach ($users as $user)
 				<tr>
@@ -31,4 +34,6 @@
 		</table>
 		{{$users->links()}}
 	</div>
+	
+</div>
 @endsection

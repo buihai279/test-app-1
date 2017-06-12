@@ -8,25 +8,21 @@ class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            
             $table->increments('id');
-            $table->string('name',100);
-            $table->string('description',300);
+            $table->string('name', 100);
+            $table->string('description', 300);
             $table->integer('price');
-            $table->string('photo',100);
+            $table->string('photo', 100);
+            $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

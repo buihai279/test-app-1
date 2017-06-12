@@ -1,10 +1,13 @@
+@section('title')
+Edit user: {{ $user->name }}
+@endsection
 @extends('layouts.app')
 @section('content')
 	<div class="container">
 	    <div class="row">
 	        <div class="col-md-8 col-md-offset-2">
 	            <div class="panel panel-default">
-	                <div class="panel-heading">Update</div>
+	                <div class="panel-heading">Update info</div>
 	                <div class="panel-body">
 	                    <form class="form-horizontal" role="form" method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data">
 	                        {{ csrf_field() }}
@@ -22,6 +25,7 @@
 	                                @endif
 	                            </div>
 	                        </div>
+
 	                        <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
 	                            <label for="avatar" class="col-md-4 control-label">Old Avatar</label>
 
@@ -31,6 +35,7 @@
 	                                
 	                            </div>
 	                        </div>
+
 	                        <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
 	                            <label for="avatar" class="col-md-4 control-label">New Avatar</label>
 
@@ -88,30 +93,30 @@
 	                            </div>
 	                        </div>
 
-	                        <div class="form-group">
+	                        <div class="form-group{{ $errors->has('newpassword') ? ' has-error' : '' }}">
 	                            <label for="newpassword" class="col-md-4 control-label">New Password</label>
 
 	                            <div class="col-md-6">
 	                                <input id="newpassword" type="password" class="form-control" name="newpassword" required>
+		                            @if ($errors->has('newpassword'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('newpassword') }}</strong>
+	                                    </span>
+	                                @endif
 	                            </div>
-	                            @if ($errors->has('newpassword'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('newpassword') }}</strong>
-                                    </span>
-                                @endif
 	                        </div>
 
-	                        <div class="form-group">
+	                        <div class="form-group{{ $errors->has('newpassword_confirmation') ? ' has-error' : '' }}">
 	                            <label for="newpassword-confirm" class="col-md-4 control-label">Confirm Password</label>
 
 	                            <div class="col-md-6">
 	                                <input id="newpassword-confirm" type="password" class="form-control" name="newpassword_confirmation" required>
+		                            @if ($errors->has('newpassword_confirmation'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('newpassword_confirmation') }}</strong>
+	                                    </span>
+	                                @endif
 	                            </div>
-	                            @if ($errors->has('newpassword_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('newpassword_confirmation') }}</strong>
-                                    </span>
-                                @endif
 	                        </div>
 
 

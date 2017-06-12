@@ -8,17 +8,15 @@ class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100);
-            $table->string('avatar',100)->default(null);
+            $table->string('name', 100);
+            $table->string('avatar', 100)->default(null);
             $table->integer('level');
-            $table->string('email',100)->unique();
+            $table->string('email', 100)->unique();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
@@ -27,8 +25,6 @@ class CreateUsersTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
